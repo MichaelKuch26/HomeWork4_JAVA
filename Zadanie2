@@ -1,0 +1,47 @@
+package org.example.seminar5.hw2;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+/**
+ * Подсчитать количество искомого слова, через map
+ * (наполнением значение, где искомое слово будет являться ключом)
+ */
+public class Main {
+    public static void main(String[] args) {
+
+        String str = "Текст – это несколько предложений, связанных между " +
+                "собой по смыслу и грамматически. Есть и более «сложная» " +
+                "формулировка данного определения. Текст – это последовательное " +
+                "объединение предложений, которое представляет собой смысловую, " +
+                "содержательную и структурную целостность.";
+        str = str.toLowerCase().replaceAll(" — ", " ");
+
+        while (str.contains(".")) {
+            str = str.replace(".", " ");
+        }
+        while (str.contains("  ")) {
+            str = str.replace("  ", " ");
+        }
+        String[] arr = str.split(" ");
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите искомое слово: ");
+        String variety = scanner.nextLine();
+        String searchWord = variety;
+        scanner.close();
+
+        Map<String, Integer> map = new HashMap<>();
+        for (String currentWord : arr){
+            if (!searchWord.toLowerCase().equals(currentWord.toLowerCase())){
+                continue;
+            }
+
+            int count = map.getOrDefault(searchWord.toLowerCase(), 0);
+            map.put(currentWord.toLowerCase(), ++count);
+        }
+
+        System.out.println("Количество искомого слова: " + map.getOrDefault(searchWord.toLowerCase(), 0));
+    }
+}
